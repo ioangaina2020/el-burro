@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="ro">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>El Burro · Task Manager</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="shell">
+  <header class="header"><div><div class="brand">EL BURRO <span>· TASK MANAGER</span></div><p>Evidența taskurilor și plăților</p></div><div id="userArea" class="hidden"><span id="roleLabel" class="tag"></span><button id="logoutBtn" class="secondary">Deconectare</button></div></header>
+  <main>
+    <section id="loginView" class="login card">
+      <div class="eyebrow">ACCES SECURIZAT</div><h1>Conectare</h1><p class="muted">Administratorul poate modifica evidența. Utilizatorii cu acces de vizualizare pot doar consulta datele.</p>
+      <div class="tabs"><button id="adminTab" class="tab active">Administrator</button><button id="viewerTab" class="tab">Vizualizare</button></div>
+      <form id="loginForm">
+        <label id="emailLabel">E-mail administrator</label><input id="email" type="email" autocomplete="username" placeholder="adresa de e-mail" required>
+        <label>Parolă</label><input id="password" type="password" autocomplete="current-password" placeholder="Parola" required>
+        <button class="primary full" type="submit">Conectare</button><p id="loginError" class="error"></p>
+      </form>
+    </section>
+    <section id="appView" class="hidden">
+      <div class="welcome"><div><div class="eyebrow">PANOU DE CONTROL</div><h1>Taskuri săptămânale</h1><p class="muted" id="accessText"></p></div><button id="refreshBtn" class="secondary">↻ Reîmprospătează</button></div>
+      <div class="stats">
+        <article class="card"><span>Membri activi</span><strong id="activeCount">0</strong></article>
+        <article class="card"><span>Taskuri efectuate</span><strong id="doneCount">0 / 0</strong></article>
+        <article class="card"><span>Plăți efectuate</span><strong id="paidTotal" class="green">0 $</strong></article>
+        <article class="card"><span>Plăți restante</span><strong id="unpaidTotal" class="yellow">0 $</strong></article>
+      </div>
+      <section class="card controls">
+        <div class="field"><label>Săptămâna</label><input type="week" id="week"></div>
+        <div class="field"><label>Valoare task / membru ($)</label><input type="number" id="amount" min="0" step="1000" value="740000"></div>
+        <div class="field grow"><label>Caută membru</label><input id="search" placeholder="Nume..."></div>
+        <div class="field"><label>Filtru</label><select id="filter"><option value="all">Toți</option><option>Activ</option><option>Scutit</option><option>Inactivitate</option></select></div>
+        <button id="addBtn" class="primary admin-only">＋ Adaugă membru</button>
+      </section>
+      <div class="table-wrap card"><table><thead><tr><th>Membru</th><th>Grad</th><th>Status săptămânal</th><th>Task efectuat</th><th>Plătit</th><th class="admin-only">Acțiuni</th></tr></thead><tbody id="membersBody"></tbody></table><div id="empty" class="empty">Nu există membri. Administratorul poate adăuga primul membru.</div></div>
+      <p class="footnote">Scutit și Inactivitate nu intră în calculele taskurilor și plăților. Modificările sunt salvate în baza de date online.</p>
+    </section>
+  </main>
+</div>
+<dialog id="memberDialog"><form id="memberForm" class="dialog-form"><h2 id="dialogTitle">Adaugă membru</h2><label>Nume membru</label><input id="memberName" required maxlength="70"><label>Grad</label><select id="memberRole"><option>Vice President</option><option>Treasurer</option><option>Sergent</option><option>Enforcer</option><option>Road Captain</option><option>Membru</option><option>Prospect</option></select><label>Status pentru săptămâna selectată</label><select id="memberStatus"><option>Activ</option><option>Scutit</option><option>Inactivitate</option></select><div class="dialog-actions"><button type="button" id="cancelBtn" class="secondary">Anulează</button><button class="primary" type="submit">Salvează</button></div></form></dialog>
+<div id="toast" role="status"></div>
+<script type="module" src="app.js"></script>
+</body></html>
